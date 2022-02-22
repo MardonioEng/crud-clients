@@ -1,38 +1,38 @@
-package com.devsuperior.dsclients.entities;
+package com.devsuperior.dsclients.dto;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import com.devsuperior.dsclients.entities.Client;
+
 import java.io.Serializable;
 import java.time.Instant;
 
-@Entity
-@Table(name = "tb_client")
-public class Client implements Serializable {
+public class ClientDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-    @Column(length = 11)
     private String cpf;
     private Double income;
-
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant birthDate;
-
     private Integer children;
 
-    public Client(){}
+    public ClientDTO() {}
 
-    public Client(Long id, String name, String cpf, Double income, Instant birthDate, Integer children) {
+    public ClientDTO(Long id, String name, String cpf, Double income, Instant birthDate, Integer children) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.income = income;
         this.birthDate = birthDate;
         this.children = children;
+    }
+
+    public ClientDTO(Client client) {
+        id = client.getId();
+        name = client.getName();
+        cpf = client.getCpf();
+        income = client.getIncome();
+        birthDate = client.getBirthDate();
+        children = client.getChildren();
     }
 
     public Long getId() {
@@ -81,20 +81,5 @@ public class Client implements Serializable {
 
     public void setChildren(Integer children) {
         this.children = children;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Client client = (Client) o;
-
-        return id.equals(client.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
     }
 }
